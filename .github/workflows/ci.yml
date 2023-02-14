@@ -16,7 +16,7 @@ jobs:
          - name: Use Node Js
            uses: actions/setup-node@v1
            with:
-             node-version: "19.x"
+             node-version: "16.x"
          - run: npm ci
          - run: npm run  format:check
          - run: npm test -- --coverage
