@@ -1,0 +1,63 @@
+name: CI
+on:
+   push:
+     branches:
+       - '*'         # matches every branch that doesn't contain a '/'
+       - '*/*'       # matches every branch containing a single '/'
+       - '**'        # matches every branch
+       - '!master'   # excludes master
+   pull_request:
+     branches: [develop,master]
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        steps:
+         - uses: actions/checkout@v3
+         - name: Cache node modules #https://docs.github.com/en/actions/using-workflows/caching-dependencies-to-speed-up-workflows
+           uses: actions/cache@v3
+           with:
+             path: ˜/.npm
+             key: with ${{runner.os}}-node-${{ hashFiles('**/package-lock.json')}}
+             restore-keys: |
+                ${{ runner.os}}-node-
+         - name: Use Node Js
+           uses: actions/setup-node@v3
+           with:
+             node-version: "18.x"
+         - run: npm ci
+         - run: npm run  format
+         - run: npm run  format:check
+         - run: npm test -- --coverage
+           env:
+             CI: true
+         - name: Upload test coverage
+           uses: actions/upload-artifact@v3
+           with:
+            name: code-coverage
+            path: coverage
+
+         - name: Build Proy
+           if: github.event_name == 'push'
+           run: |
+             npm run build
+             npm install -g surge
+             npm install -g semantic-release
+         - name: Upload build folder
+           if: github.event_name == 'push'
+           uses: actions/upload-artifact@v3
+           with:
+            name: build
+            path: build
+         - name: Semantic release # //https://semantic-release.gitbook.io/semantic-release/usage/plugins
+           if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+           run:  npx semantic-release
+           env:
+              GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN}}
+         - name: Download artifacts
+           uses: actions/download-artifact@v3
+         - name: Deploy to stage
+           if: github.event_name == 'push'
+           run: npx surge --project ./build --domain  silencio-apparatusos.surge.sh
+           env:
+             SURGE_LOGIN: ${{ secrets.SURGE_LOGIN}}
+             SURGE_TOKEN: ${{ secrets.SURGE_TOKEN}}
