@@ -31,7 +31,7 @@ jobs:
            env:
              CI: true
          - name: Upload test coverage
-           uses: actactions/upload-artifact@v3
+           uses: actions/upload-artifact@v3
            with:
             name: code-coverage
             path: coverage
