@@ -32,5 +32,5 @@ jobs:
            if: github.event_name == 'push'
            run: npx surge --project ./build --domain  silencio-apparatusos.surge.sh
            env:
-             SURGE_LOGIN: ${{sercrets.SURGE_LOGIN}}
-             SURGE_TOKEN: ${{sercrets.SURGE_TOKEN}}
+             SURGE_LOGIN: ${{ secrets.SURGE_LOGIN}}
+             SURGE_TOKEN: ${{ secrets.SURGE_TOKEN}}
