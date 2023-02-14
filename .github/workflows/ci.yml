@@ -23,3 +23,14 @@ jobs:
          - run: npm test -- --coverage
            env:
              CI: true
+         - name: Build Proy
+           if: github.event_name == 'push'
+           run: |
+             npm run build
+             npm install -g surge
+         - name: Deploy to stage
+           if: github.event_name == 'push'
+           run: npx surge --project ./build --domain  silencio-apparatusos.surge.sh
+           env:
+             SURGE_LOGIN: ${{ secrets.SURGE_LOGIN}}
+             SURGE_TOKEN: ${{ secrets.SURGE_TOKEN}}
