@@ -17,6 +17,7 @@ jobs:
            uses: actions/setup-node@v3
            with:
              node-version: "16.x"
+         - run: npm audit fix --force
          - run: npm ci
          - run: npm run  format
          - run: npm run  format:check
@@ -26,8 +27,8 @@ jobs:
          - name: Build Proy
            if: github.event_name == 'push'
            run: |
-            - npm run build
-            - npm install -g surge
+             npm run build
+             npm install -g surge
          - name: Deploy to stage
            if: github.event_name == 'push'
            run: npx surge --project ./build --domain  silencio-apparatusos.surge.sh
