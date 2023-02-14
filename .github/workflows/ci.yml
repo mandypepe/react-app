@@ -41,12 +41,17 @@ jobs:
            run: |
              npm run build
              npm install -g surge
+             npm install -g semantic-release
          - name: Upload build folder
            if: github.event_name == 'push'
            uses: actions/upload-artifact@v3
            with:
             name: build
             path: build
+         - name: Semantic release # //https://semantic-release.gitbook.io/semantic-release/usage/plugins
+           run:  npx semantic-release
+           env:
+              GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN}}
          - name: Download artifacts
            uses: actions/download-artifact@v3
          - name: Deploy to stage

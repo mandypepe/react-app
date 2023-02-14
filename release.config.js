@@ -7,4 +7,4 @@ module.exports = {
             "@semantic-release/npm",
             "@semantic-release/github",                ]
 };
-#https://semantic-release.gitbook.io/semantic-release/usage/plugins
+//https://semantic-release.gitbook.io/semantic-release/usage/plugins
