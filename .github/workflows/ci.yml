@@ -42,6 +42,7 @@ jobs:
              npm run build
              npm install -g surge
          - name: Upload build folder
+           if: github.event_name == 'push'
            uses: actactions/upload-artifact@v3
            with:
             name: build
