@@ -30,11 +30,24 @@ jobs:
          - run: npm test -- --coverage
            env:
              CI: true
+         - name: Upload test coverage
+           uses: actactions/upload-artifact@v3
+           with:
+            name: code-coverage
+            path: coverage
+
          - name: Build Proy
            if: github.event_name == 'push'
            run: |
              npm run build
              npm install -g surge
+         - name: Upload build folder
+           uses: actactions/upload-artifact@v3
+           with:
+            name: build
+            path: build
+         - name: Download artifacts
+           uses: actions/download-artifact@v3
          - name: Deploy to stage
            if: github.event_name == 'push'
            run: npx surge --project ./build --domain  silencio-apparatusos.surge.sh
