@@ -1,6 +1,6 @@
 name: hello external
 author: mandy pepe
-descriptions:
+description:
 inputs:
     who-to-greet:
         decription: 'Who to greet'
@@ -8,7 +8,7 @@ inputs:
         default: mandy
 outputs:
     time:
-        descriptions: 'the greting time '
+        description: 'the greting time '
 runs:
     using: 'node16'
     main: 'index.js'
