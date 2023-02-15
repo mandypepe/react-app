@@ -1,10 +1,8 @@
-    const core=require('@actions/core');
+    const core = require('@actions/core');
     const github=require('@actions/github');
     const name=core.getInput('who-to-greet');
 try {
     //throw( new Error("some error message"));
-
-
     core.debug('Debug message: ');
     core.warning('Debug message: ');
     core.error('Error message: ');
