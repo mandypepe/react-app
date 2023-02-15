@@ -1,0 +1,14 @@
+name: hello external
+author: mandy pepe
+descriptions:
+inputs:
+    who-to-greet:
+        decription: 'Who to greet'
+        required: true
+        default: mandy
+outputs:
+    time:
+        descriptions: 'the greting time '
+runs:
+    using: 'node16'
+    main: 'index.js'
