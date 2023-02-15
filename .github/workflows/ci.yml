@@ -11,6 +11,11 @@ on:
 jobs:
     build:
         runs-on: ubuntu-latest
+        env:
+          SURGE_LOGIN: ${{ secrets.SURGE_LOGIN}}
+          SURGE_TOKEN: ${{ secrets.SURGE_TOKEN}}
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN}}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN}}
         steps:
          - uses: actions/checkout@v3
          - name: Cache node modules #https://docs.github.com/en/actions/using-workflows/caching-dependencies-to-speed-up-workflows
@@ -55,19 +60,14 @@ jobs:
          - name: Semantic release # //https://semantic-release.gitbook.io/semantic-release/usage/plugins
            if: github.event_name == 'push' && github.ref == 'refs/heads/master'
            run:  npx semantic-release
-           env:
-              GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN}}
          - name: Download artifacts
            uses: actions/download-artifact@v3
          - name: Deploy to staging
            if: github.event_name == 'push' && github.ref == 'refs/heads/develop'
            run: npx surge --project ./build --domain  silencio-apparatusos.surge.sh
-           env:
-             SURGE_LOGIN: ${{ secrets.SURGE_LOGIN}}
-             SURGE_TOKEN: ${{ secrets.SURGE_TOKEN}}
          - name: Deploy to Prod
            if: github.event_name == 'push' && github.ref == 'refs/heads/master'
            run: npx surge --project ./build --domain  prodsilencio-apparatusos.surge.sh
-           env:
-             SURGE_LOGIN: ${{ secrets.SURGE_LOGIN}}
-             SURGE_TOKEN: ${{ secrets.SURGE_TOKEN}}
+         - name: Upload coverage reports to Codecov
+           uses: codecov/codecov-action@v3
+           run: npx codecov
