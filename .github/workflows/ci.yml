@@ -33,6 +33,7 @@ jobs:
          - run: npm run  format
          - run: npm run  format:check
          - run: npm test -- --coverage
+         - run: npm -g i -D @vercel/ncc --force
            env:
              CI: true
          - name: Upload test coverage
