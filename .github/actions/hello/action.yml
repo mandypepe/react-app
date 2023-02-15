@@ -1,5 +1,5 @@
 name: hello external
-author: mandy pepe
+author: mandypepe
 description:
 inputs:
     who-to-greet:
