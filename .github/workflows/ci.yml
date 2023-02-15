@@ -48,6 +48,10 @@ jobs:
            with:
             name: build
             path: build
+         - name: zip assents
+           run: |
+            zip -r build.zip ./build
+            zip -r coverage.zip ./coverage
          - name: Semantic release # //https://semantic-release.gitbook.io/semantic-release/usage/plugins
            if: github.event_name == 'push' #&& github.ref == 'refs/heads/master'
            run:  npx semantic-release
