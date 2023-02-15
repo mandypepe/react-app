@@ -8,5 +8,5 @@ try {
     core.setOutput("time", time.toTimeString());
     console.log(JSON.stringify(github),null, '\t');
 } catch(error){
-    core.setFailed('sdfsdg');
+    core.setFailed(error.message);
 }
