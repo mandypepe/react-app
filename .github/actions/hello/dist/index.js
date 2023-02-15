@@ -747,13 +747,16 @@ const core=__webpack_require__(718);
 const github=__webpack_require__(104);
 const name=core.getInput('who-to-greet');
 try {
-    throw( new Error("some error message"));
+    //throw( new Error("some error message"));
+    core.debug('Debug message: ');
+    core.warning('Debug message: ');
+    core.error('Error message: ');
     console.log("hello{}")
     const time = new Date();
     core.setOutput("time", time.toTimeString());
     console.log(JSON.stringify(github),null, '\t');
 } catch(error){
-    core.setFailed(error.message);
+    core.setFailed( error.message );
 }
 
 
