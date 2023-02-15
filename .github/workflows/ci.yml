@@ -69,5 +69,4 @@ jobs:
            if: github.event_name == 'push' && github.ref == 'refs/heads/master'
            run: npx surge --project ./build --domain  prodsilencio-apparatusos.surge.sh
          - name: Upload coverage reports to Codecov
-           uses: codecov/codecov-action@v3
            run: npx codecov
