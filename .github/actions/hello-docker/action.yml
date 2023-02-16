@@ -1,0 +1,18 @@
+name: Docker
+author: mandypepe
+description:
+inputs:
+    who-to-greet:
+        decription: 'Who to greet docker '
+        required: true
+        default: mandy
+outputs:
+    time:
+        description: 'the greting time  docker '
+runs:
+    using: 'docker'
+    #image: 'docker://alpine:3.17.2'
+    image: "Dockerfile"
+    #entrypoint:
+    args:
+        - ${{inputs.who-to-greet}}
